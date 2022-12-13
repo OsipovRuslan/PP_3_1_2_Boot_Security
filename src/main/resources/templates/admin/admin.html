@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        td, th {
+            border: 1px solid black;
+            padding: 4px;
+        }
+
+        form {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Roles</th>
+        <th>Operations</th>
+    </tr>
+    <th:block th:each="user : ${users}">
+        <tr>
+            <td th:text="${user.getId()}"></td>
+            <td th:text="${user.getUsername()}"></td>
+            <td th:text="${user.getEmail()}"></td>
+            <td th:text="${user.getPassword()}"></td>
+            <td>
+                <p th:each="role : ${user.getRoles()}" th:text="${role.getRole()}"></p>
+            </td>
+            <td>
+                <a th:href="@{/admin/users/edit/{id}(id=${user.getId()})}">
+                    <input type="button" value="Edit">
+                </a>
+                <form th:method="DELETE" th:action="@{/admin/users/{id}(id=${user.getId()})}">
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
+        </tr>
+    </th:block>
+</table>
+<input type="button" value="Add user" onclick="window.location.href='/admin/registration'">
+<form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST" id="logout">
+    <input type="submit" value="Logout">
+</form>
+</body>
+</html>

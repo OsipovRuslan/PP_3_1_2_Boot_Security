@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/admin/users/edit}" th:object="${user}">
+    <label for="id">Id</label>
+    <input readonly type="text" th:field="*{id}" id="id">
+    <br>
+    <label for="username">username</label>
+    <input type="text" th:field="*{username}" id="username">
+    <div style="color: red" th:if="${#fields.hasErrors('username')}"
+         th:errors="*{username}" class="field"></div>
+    <br>
+    <label for="email">Email</label>
+    <input type="text" th:field="*{email}" id="email">
+    <input type="hidden" th:field="*{password}">
+    <br>
+    <input type="submit" value="Edit">
+    <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST">
+        <input type="submit" value="Logout">
+    </form>
+</form>
+</body>
+</html>

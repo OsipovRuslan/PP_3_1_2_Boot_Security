@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        form {
+            width: 26%;
+            padding-left: 37%;
+            padding-top: 200px;
+        }
+        label {
+            float: left;
+        }
+        input {
+            float: right;
+        }
+        .field {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <div id="main-div">
+        <form th:method="post" th:action="@{/process_login}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <div class="field">
+                <label for="username">Введите имя пользователя</label>
+                <input type="text" name="username" id="username">
+            </div>
+            <div class="field">
+                <label for="password">Введите пароль</label>
+                <input type="password" name="password" id="password">
+            </div>
+            <div th:if="${param.error}" style="color: red" class="field">
+                <p style="color: red">Неверный логин или праоль</p>
+            </div>
+            <input type="submit" value="Login" class="field">
+        </form>
+    </div>
+</body>
+</html>
